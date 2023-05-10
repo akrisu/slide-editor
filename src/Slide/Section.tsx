@@ -4,17 +4,17 @@ import Icon from '@mui/material/Icon'
 import { Typography } from 'antd'
 import { FC, useState } from 'react'
 
-import { IconName, IconPicker } from './IconPicker'
+import { IconName, IconPicker } from '../IconPicker'
 
 const { Paragraph } = Typography;
 
 type Props = {
-  readonly id: number;
+  readonly defaultIcon: IconName;
 };
 
-export const IconWithTitleAndDescription: FC<Props> = ({ id }) => {
+export const Section: FC<Props> = ({ defaultIcon }) => {
   const [pickerVisible, setPickerVisible] = useState(false);
-  const [icon, setIcon] = useState<IconName>("star");
+  const [icon, setIcon] = useState<IconName>(defaultIcon);
   const [mainText, setMainText] = useState("Insert text here");
   const [additionalText, setAdditionalText] = useState(
     "Add here your additional text"
@@ -26,7 +26,7 @@ export const IconWithTitleAndDescription: FC<Props> = ({ id }) => {
   };
 
   const { attributes, listeners, transition, transform, setNodeRef } =
-    useSortable({ id });
+    useSortable({ id: defaultIcon });
 
   const style = { transform: CSS.Transform.toString(transform), transition };
 

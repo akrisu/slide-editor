@@ -1,52 +1,23 @@
-import { closestCenter, DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
-import { restrictToHorizontalAxis } from '@dnd-kit/modifiers'
-import { arrayMove, horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
-import { useState } from 'react'
+import { Button } from "antd";
+import { useRef } from "react";
 
-import { IconWithTitleAndDescription } from './IconWithTitleAndDescription'
-import { Title } from './Title'
+import { downloadComponentInPDF } from "./download-component-in-pdf";
+import { Slide } from "./Slide";
 
 function App() {
-  const [items, setItems] = useState([1, 2, 3]);
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8,
-      },
-    })
-  );
+  const pdfRef = useRef<HTMLDivElement>(null);
 
-  const handleDragEnd = ({ active, over }: DragEndEvent) => {
-    if (over) {
-      setItems((items) => {
-        const activeIndex = items.indexOf(+active.id);
-        const overIndex = items.indexOf(+over.id);
-
-        return arrayMove(items, activeIndex, overIndex);
-      });
-    }
+  const generatePDF = () => {
+    const content = pdfRef.current;
+    content && downloadComponentInPDF(content);
   };
 
   return (
     <>
-      <Title />
-      <DndContext
-        sensors={sensors}
-        modifiers={[restrictToHorizontalAxis]}
-        onDragEnd={handleDragEnd}
-        collisionDetection={closestCenter}
-      >
-        <div className="gap-8 grid grid-cols-3 grid-flow-col">
-          <SortableContext
-            strategy={horizontalListSortingStrategy}
-            items={items}
-          >
-            {items.map((item) => (
-              <IconWithTitleAndDescription key={item} id={item} />
-            ))}
-          </SortableContext>
-        </div>
-      </DndContext>
+      <Slide ref={pdfRef} />
+      <Button type="primary" onClick={generatePDF}>
+        Download in PDF
+      </Button>
     </>
   );
 }
