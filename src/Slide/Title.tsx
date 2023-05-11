@@ -9,7 +9,6 @@ export const Title = () => {
       className="cursor-pointer !mx-auto w-fit"
       editable={{ onChange: setTitle, triggerType: ["text"] }}
       level={4}
-      style={{ margin: 0 }}
     >
       {title}
     </Typography.Title>

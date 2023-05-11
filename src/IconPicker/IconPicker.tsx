@@ -13,10 +13,10 @@ type Props = {
 export const IconPicker: FC<Props> = ({ onIconSelect, onCancel, open }) => {
   return (
     <Modal
-      maskClosable={true}
-      onCancel={onCancel}
       bodyStyle={{ margin: "25px", height: "400px", overflow: "auto" }}
       footer={null}
+      maskClosable={true}
+      onCancel={onCancel}
       open={open}
     >
       <Space direction="horizontal" wrap={true} size={16}>
